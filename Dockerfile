@@ -1,4 +1,3 @@
-@@ -0,0 +1,19 @@
 # Usa la imagen oficial más reciente de n8n como base
 FROM n8nio/n8n:latest
 
