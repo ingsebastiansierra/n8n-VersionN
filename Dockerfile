@@ -1,20 +1,16 @@
-# Usa la imagen oficial de n8n
 FROM n8nio/n8n:latest
 
-# Cambia al usuario root
 USER root
 
-# Instala pnpm (Corepack maneja pnpm y yarn en Node.js 16+)
+# Activa corepack y pnpm
 RUN corepack enable && corepack prepare pnpm@8.15.4 --activate
 
-# Instala el nodo comunitario con pnpm
-RUN pnpm add -g n8n-nodes-tesseractjs
+# Instala el nodo comunitario en el contexto de n8n
+RUN pnpm install n8n-nodes-tesseractjs --prefix /usr/local/lib/node_modules/n8n
 
-# Crea el directorio /data y asigna permisos
+# Ajusta permisos
 RUN mkdir -p /data && chown -R node:node /data
 
-# Cambia a usuario node
 USER node
-
 VOLUME /data
 EXPOSE 8080
