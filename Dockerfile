@@ -2,13 +2,13 @@ FROM n8nio/n8n:latest
 
 USER root
 
-# Activa corepack y pnpm
-RUN corepack enable && corepack prepare pnpm@8.15.4 --activate
+# Deshabilitar el bloqueo de 'only-allow' para poder usar npm
+RUN sed -i 's/"only-allow": ".*"//' /usr/local/lib/node_modules/n8n/package.json
 
-# Instala el nodo comunitario en el contexto de n8n
-RUN pnpm install n8n-nodes-tesseractjs --prefix /usr/local/lib/node_modules/n8n
+# Instalar nodo comunitario con npm
+RUN npm install --legacy-peer-deps -g n8n-nodes-tesseractjs
 
-# Ajusta permisos
+# Ajustar permisos
 RUN mkdir -p /data && chown -R node:node /data
 
 USER node
