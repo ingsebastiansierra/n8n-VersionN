@@ -4,6 +4,9 @@ FROM n8nio/n8n:latest
 # Cambia temporalmente al usuario root para ejecutar comandos con permisos elevados
 USER root
 
+# Instala el nodo comunitario n8n-nodes-tesseractjs
+RUN npm install --global --omit=dev n8n-nodes-tesseractjs
+
 # Crea el directorio /data (si no existe) y asigna la propiedad al usuario `node`
 # Esto asegura que n8n tenga acceso de escritura a este directorio
 RUN mkdir -p /data && chown -R node:node /data
